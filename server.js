@@ -76,9 +76,9 @@ fastify.get("/", function (request, reply) {
 
 fastify.post("/postimage", async function (request, reply) {
   
-  console.log(request.headers.referer)
-  console.log(request.headers.origin)
-  console.log(request.headers.host)
+  // console.log(request.headers.referer)
+  // console.log(request.headers.origin)
+  // console.log(request.headers.host)
 
   if (    
       request.headers.referer != 'https://woodblockshop.glitch.me/' && 
@@ -97,10 +97,18 @@ fastify.post("/postimage", async function (request, reply) {
   
   
   
+  // const s3 = new S3Client({
+  //   region: process.env.WOODBLOCK_AWS_REGION,
+  //   accessKeyId: process.env.WOODBLOCK_AWS_ACCESS_KEY_ID,
+  //   secretAccessKey: process.env.WOODBLOCK_AWS_SECRET_ACCESS_KEY
+  // });
+  
   const s3 = new S3Client({
-    region: process.env.WOODBLOCK_AWS_REGION,
-    accessKeyId: process.env.WOODBLOCK_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.WOODBLOCK_AWS_SECRET_ACCESS_KEY
+    region: process.env.WOODBLOCK_AWS_REGION, 
+    credentials: {
+      accessKeyId: process.env.WOODBLOCK_AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.WOODBLOCK_AWS_SECRET_ACCESS_KEY,
+    },
   });
   
 
