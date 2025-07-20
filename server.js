@@ -13,7 +13,7 @@ const path = require("path");
 // Require the fastify framework and instantiate it
 const fastify = require("fastify")({
   // Set this to true for detailed logging:
-  logger: false,
+  // logger: true,
   bodyLimit: 10485760
 });
 
@@ -76,16 +76,21 @@ fastify.get("/", function (request, reply) {
 
 fastify.post("/postimage", async function (request, reply) {
   
-  
-  if (
-      request.headers.referer != 'https://woodblockshop.glitch.me/' || 
-      request.headers.origin != 'https://woodblockshop.glitch.me' || 
-      request.headers.host != 'woodblockshop.glitch.me'     
+  console.log(request.headers.referer)
+  console.log(request.headers.origin)
+  console.log(request.headers.host)
+
+  if (    
+      request.headers.referer != 'https://woodblockshop.glitch.me/' && 
+      request.headers.origin != 'https://woodblockshop.glitch.me' && 
+      request.headers.host != 'woodblockshop.glitch.me' &&
+      request.headers.host.indexOf('0.0.0.0') == -1 &&
+      request.headers.host.indexOf('woodblockshop.thisismattmiller.com') == -1
      ){  
     reply
       .code(500)
       .header('Content-Type', 'application/json; charset=utf-8')
-      .send({ results: 'hii', code: 500 })  
+      .send({ results: 'Host name mismatch', code: 500 })
 
     return true
   }

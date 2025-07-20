@@ -9,7 +9,7 @@
     -->
     
     <meta charset="utf-8" />
-    <link rel="icon" href="https://glitch.com/favicon.ico" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="/konva.min.js"></script>
     <script src="vue.global.js"></script>
@@ -560,14 +560,19 @@
               .then(data => {
                // enter you logic when the fetch is successful
               console.log(data)
-              if (data && data.statusCode && data.statusCode != 200){
-                alert("There was an error posting :( you should save it locally.")
+              if (data && data.code && data.code != 200){
+                if (data && data.results && data.results.length>0){
+                  alert("There was an error posting :( " + data.results + " you should save it locally.")
+                }
+                  
+                
               }else{
                 this.posted()
               }
 
             })
               .catch(error => {
+              alert(error.results)
               // enter your logic for when there is an error (ex. error toast)
                console.log(error)
               })                
