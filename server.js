@@ -39,7 +39,7 @@ fastify.register(require("@fastify/view"), {
 // Load and parse SEO data
 const seo = require("./src/seo.json");
 if (seo.url === "glitch-default") {
-  seo.url = `https://${process.env.PROJECT_DOMAIN}.glitch.me`;
+  seo.url = `https://woodblockshop.thisismattmiller.com`;
 }
 
 /**
@@ -98,9 +98,9 @@ fastify.post("/postimage", async function (request, reply) {
   
   
   const s3 = new S3Client({
-    region: process.env.AWS_REGION,
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    region: process.env.WOODBLOCK_AWS_REGION,
+    accessKeyId: process.env.WOODBLOCK_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.WOODBLOCK_AWS_SECRET_ACCESS_KEY
   });
   
 
@@ -119,7 +119,7 @@ fastify.post("/postimage", async function (request, reply) {
 
   
   const putObjectCommand = new PutObjectCommand({
-    Bucket: process.env.AWS_BUCKET, 
+    Bucket: process.env.WOODBLOCK_AWS_BUCKET, 
     Key: `uploaded/${uuid}/${uuid}.png`,
     Body: buffer,
     ContentType: 'image/png',
@@ -128,7 +128,7 @@ fastify.post("/postimage", async function (request, reply) {
   let r1 = await s3.send(putObjectCommand);
   
   const putObjectCommand2 = new PutObjectCommand({
-    Bucket: process.env.AWS_BUCKET, 
+    Bucket: process.env.WOODBLOCK_AWS_BUCKET, 
     Key: `uploaded/${uuid}/${uuid}.json`,
     Body: JSON.stringify({
       title: request.body.title,
